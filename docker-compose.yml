@@ -1,0 +1,73 @@
+version: '3.7'
+
+services:
+  speedtest:
+    container_name: ku-speedtest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      MODE: standalone
+      TITLE: "KU Speed Test"
+      TELEMETRY: "true"
+      ENABLE_ID_OBFUSCATION: "false"
+      REDACT_IP_ADDRESSES: "false"
+      PASSWORD: "testpassword"
+      # EMAIL: "admin@ku.ac.th"
+      # DISABLE_IPINFO: "false"
+      # IPINFO_APIKEY: "your_api_key_here"
+      DISTANCE: "km"
+      WEBPORT: 8080
+      # Database settings for SQLite (default)
+      DB_TYPE: sqlite
+      DB_FILE: /speedtest/results/speedtest_telemetry.db
+    ports:
+      - "80:8080"  # webport mapping (host:container)
+    volumes:
+      # Persist database
+      - speedtest-db:/speedtest/results
+      # Optional: Mount custom index.html (KU customized version)
+      - ./index.html:/speedtest/index.html:ro
+      # Optional: Mount assets folder (KU logo, fonts)
+      - ./assets:/speedtest/assets:ro
+    networks:
+      - speedtest-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: MySQL database for production use
+  # Uncomment if you want to use MySQL instead of SQLite
+  # mysql:
+  #   container_name: ku-speedtest-db
+  #   image: mysql:8.0
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: rootpassword
+  #     MYSQL_DATABASE: speedtest
+  #     MYSQL_USER: speedtest
+  #     MYSQL_PASSWORD: speedtestpass
+  #   volumes:
+  #     - mysql-data:/var/lib/mysql
+  #     - ./results/telemetry_mysql.sql:/docker-entrypoint-initdb.d/init.sql:ro
+  #   networks:
+  #     - speedtest-network
+  #   healthcheck:
+  #     test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+
+volumes:
+  speedtest-db:
+    driver: local
+  # mysql-data:
+  #   driver: local
+
+networks:
+  speedtest-network:
+    driver: bridge

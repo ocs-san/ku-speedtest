@@ -2,12 +2,16 @@
 
 // Type of db: "mssql", "mysql", "sqlite" or "postgresql"
 $db_type = 'sqlite';
+
+// SECURITY: Stats page has been disabled for security reasons
+// Access database directly instead - see DATABASE_ACCESS.md
 // Password to login to stats.php. Change this!!!
-$stats_password = 'testpassword';
+$stats_password = 'DISABLED_FOR_SECURITY';
+
 // If set to true, test IDs will be obfuscated to prevent users from guessing URLs of other tests
-$enable_id_obfuscation = false;
+$enable_id_obfuscation = true;
 // If set to true, IP addresses will be redacted from IP and ISP info fields, as well as the log
-$redact_ip_addresses = false;
+$redact_ip_addresses = true;  // SECURITY: Enable IP redaction for privacy
 
 // Sqlite3 settings
 $Sqlite_db_file = 'speedtest_telemetry.db';

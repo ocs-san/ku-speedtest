@@ -1,0 +1,44 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+LICENSE
+
+# Development files
+.vscode
+.idea
+*.log
+
+# Disabled files
+*.disabled
+*.bak
+*.backup
+*.old
+
+# Database files (will be created in container)
+*.db
+*.sql
+
+# Docker files
+docker-compose.yml
+.dockerignore
+
+# Node modules (if any)
+node_modules
+npm-debug.log
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Backup files
+*.bak
+*.tmp
+*~
+
+# Examples (optional - comment out if needed)
+examples/
