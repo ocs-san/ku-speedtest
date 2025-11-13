@@ -40,9 +40,14 @@ if [ "$MODE" == "backend" ]; then
   fi
 fi
 
-# Set up unified index.php
+# Set up unified index.php or index.html
 if [ "$MODE" != "backend" ]; then
-  cp /speedtest/ui.php /var/www/html/index.php
+  # Use custom index.html if it exists, otherwise fall back to ui.php
+  if [ -f /speedtest/index.html ]; then
+    cp /speedtest/index.html /var/www/html/index.html
+  else
+    cp /speedtest/ui.php /var/www/html/index.php
+  fi
 fi
 
 # Apply Telemetry settings when running in standalone or frontend mode and telemetry is enabled
