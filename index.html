@@ -11,13 +11,18 @@ function I(i){return document.getElementById(i);}
 //DARK MODE TOGGLE
 function toggleDarkMode(){
 	var html = document.documentElement;
+	var btn = I('darkModeToggle');
 	var isDark = html.getAttribute('data-theme') === 'dark';
 	if(isDark){
 		html.setAttribute('data-theme', 'light');
 		localStorage.setItem('theme', 'light');
+		btn.innerHTML = '🌙'; // Moon for light mode (click to go dark)
+		btn.title = 'Switch to Dark Mode';
 	}else{
 		html.setAttribute('data-theme', 'dark');
 		localStorage.setItem('theme', 'dark');
+		btn.innerHTML = '☀️'; // Sun for dark mode (click to go light)
+		btn.title = 'Switch to Light Mode';
 	}
 }
 
@@ -35,6 +40,19 @@ function toggleDarkMode(){
 		}
 	}
 })();
+
+//Update icon on page load
+window.addEventListener('DOMContentLoaded', function(){
+	var btn = I('darkModeToggle');
+	var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+	if(isDark){
+		btn.innerHTML = '☀️';
+		btn.title = 'Switch to Light Mode';
+	}else{
+		btn.innerHTML = '🌙';
+		btn.title = 'Switch to Dark Mode';
+	}
+});
 
 //LIST OF TEST SERVERS. Leave empty if you're doing a standalone installation. See documentation for details
 var SPEEDTEST_SERVERS=[
@@ -318,20 +336,30 @@ function initUI(){
 		position:fixed;
 		top:1em;
 		right:1em;
-		background:var(--border-color);
-		color:#FFFFFF;
-		border:none;
+		background:rgba(255, 255, 255, 0.1);
+		backdrop-filter:blur(10px);
+		-webkit-backdrop-filter:blur(10px);
+		color:var(--text-color);
+		border:1px solid rgba(255, 255, 255, 0.2);
 		border-radius:50%;
-		width:50px;
-		height:50px;
+		width:45px;
+		height:45px;
 		cursor:pointer;
-		font-size:1.5em;
-		box-shadow:0 2px 8px rgba(0,0,0,0.2);
-		transition:transform 0.2s ease;
+		font-size:1.3em;
+		box-shadow:0 4px 12px rgba(0,0,0,0.15);
+		transition:all 0.3s ease;
 		z-index:1000;
+		display:flex;
+		align-items:center;
+		justify-content:center;
 	}
 	#darkModeToggle:hover{
-		transform:scale(1.1);
+		transform:scale(1.1) rotate(15deg);
+		box-shadow:0 6px 16px rgba(0,0,0,0.25);
+		background:rgba(255, 255, 255, 0.15);
+	}
+	#darkModeToggle:active{
+		transform:scale(0.95);
 	}
 	#loading{
 		background-color:#FFFFFF;
@@ -582,7 +610,7 @@ function initUI(){
 <title>KU Speed Test</title>
 </head>
 <body onload="initServers()">
-<button id="darkModeToggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">🌓</button>
+<button id="darkModeToggle" onclick="toggleDarkMode()"></button>
 <div class="logo-container">
 	<img src="assets/KU_Logo_PNG.png" alt="Kasetsart University" width="100" onerror="this.style.display='none';document.getElementById('fallbackTitle').style.display='block';">
 	<h1 id="fallbackTitle" style="display:none;">KU SpeedTest</h1>

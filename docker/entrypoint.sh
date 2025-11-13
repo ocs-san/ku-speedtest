@@ -16,6 +16,11 @@ cp /speedtest/*.js /var/www/html/
 # Copy favicon
 cp /speedtest/favicon.ico /var/www/html/
 
+# Copy assets folder (logo, fonts, etc.)
+if [ -d /speedtest/assets ]; then
+  cp -r /speedtest/assets /var/www/html/
+fi
+
 # Set custom webroot on alpine
 if is_alpine; then
   echo "ALPINE IMAGE"

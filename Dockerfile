@@ -27,6 +27,7 @@ COPY docker/servers.json /servers.json
 
 COPY docker/*.php /speedtest/
 COPY index.html /speedtest/
+COPY assets/ /speedtest/assets/
 COPY docker/entrypoint.sh /
 
 # Prepare default environment variables
