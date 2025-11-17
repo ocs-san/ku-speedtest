@@ -27,18 +27,9 @@ COPY speedtest_worker.js /speedtest/
 COPY favicon.ico /speedtest/
 COPY assets/ /speedtest/assets/
 
-# Copy backend folder (if exists)
-COPY backend/ /speedtest/backend/ 2>/dev/null || true
-
-# Copy results folder for telemetry (if needed)
-COPY results/ /speedtest/results/ 2>/dev/null || true
-
 # Copy entrypoint script
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-
-# Copy Apache security configuration
-COPY apache-security.conf /etc/apache2/conf-available/security-headers.conf
 
 # Fix permissions
 RUN chown -R www-data:www-data /speedtest/ \
@@ -46,9 +37,6 @@ RUN chown -R www-data:www-data /speedtest/ \
 
 # Enable Apache modules
 RUN a2enmod rewrite headers
-
-# Enable security configuration
-RUN a2enconf security-headers
 
 # Apache virtual host configuration
 RUN { \

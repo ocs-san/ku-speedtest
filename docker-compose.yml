@@ -17,8 +17,6 @@ services:
           }
         ]
       
-      TELEMETRY_ENABLED: "false"
-      
     restart: unless-stopped
     volumes:
       Optional: Mount custom files

@@ -39,7 +39,6 @@ Dockerfile
 
 # Security files
 .htaccess
-*.conf
 
 # Backup files
 *.bak
