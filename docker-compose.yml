@@ -1,0 +1,26 @@
+services:
+  speedtest:
+    build: .
+    container_name: ku-speedtest
+    ports:
+      - "8080:8080"
+    environment:
+      SPEEDTEST_SERVERS: |
+        [
+          {
+            "name": "KU Main Server",
+            "server": "//speedtest.ku.ac.th/",
+            "dlURL": "backend/garbage.php",
+            "ulURL": "backend/empty.php",
+            "pingURL": "backend/empty.php",
+            "getIpURL": "backend/getIP.php"
+          }
+        ]
+      
+      TELEMETRY_ENABLED: "false"
+      
+    restart: unless-stopped
+    volumes:
+      Optional: Mount custom files
+      - ./index.html:/speedtest/index.html:ro
+      - ./assets:/speedtest/assets:ro

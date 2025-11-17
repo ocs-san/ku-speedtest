@@ -1,0 +1,49 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+!assets/README.md
+LICENSE
+README.md
+
+# Development files
+.vscode
+.idea
+*.log
+.DS_Store
+
+# Environment files
+.env
+.env.*
+*.key
+*.pem
+
+# Backend files (not needed in standalone mode)
+backend/
+results/
+docker/
+
+# Database files
+*.db
+*.sql
+*.sqlite
+*.sqlite3
+
+# Docker files
+docker-compose.yml
+.dockerignore
+Dockerfile
+
+# Security files
+.htaccess
+*.conf
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.tmp
+*~
